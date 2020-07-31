@@ -1,0 +1,8 @@
+beautifultable==1.0.0
+broadlink==0.14.0
+broadlinkhacktools==0.0.1
+cffi==1.14.1
+cryptography==3.0
+pycparser==2.20
+six==1.15.0
+wcwidth==0.2.5
