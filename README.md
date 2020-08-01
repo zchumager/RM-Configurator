@@ -1,5 +1,9 @@
 **BROADLINK RM CONFIGURATOR**
 
+IT IS REALLY IMPORTANT EXECUTE PIP FREEZE ON TXT FILE TO DOWNLOAD DEPENDENCIES
+
+pip3 freeze -r requirements.txt
+
 Python CLI Tool for retrieving network information of any Broadlink device like RM2, RM3 and RM4 IR/RF Hub  
 . At present, the following devices are currently supported:  
   
