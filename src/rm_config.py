@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
-import broadlink
+
 import argparse
+import nmap
+import broadlink
 from errno import ENETUNREACH
 
 
@@ -50,6 +52,19 @@ def discover_devices():
         print("No device was found on the network")
 
 
+def get_used_ips(network_mask):
+    '''
+        :param network_mask: the valid network mask where computer is connected like 192.168.x.y/24
+    '''
+    nm = nmap.PortScanner()
+
+    host_dict = nm.scan(hosts=network_mask, arguments='-n -sP -PE').get('scan')
+    host_list = host_dict.keys()
+
+    for host in host_list:
+        print(host)
+
+
 def main():
     parser = argparse.ArgumentParser(description='RM Mini Configurator Python CLI Tool')
 
@@ -57,6 +72,7 @@ def main():
     parser.add_argument('--password', help="WiFi Password")
     parser.add_argument('--mode', help="WiFi Security Mode")
     parser.add_argument('--get', help="Get details for an already configured RM Mini", action="store_true")
+    parser.add_argument('--mask', help='Get Used IPs to use as static according a network mask')
 
     args = parser.parse_args()
 
@@ -68,6 +84,8 @@ def main():
         discover_devices()
     elif args.get:
         discover_devices()
+    elif args.mask:
+        get_used_ips(args.mask)
     else:
         print("PLEASE USE THE FLAG --get TO GET RM MINI ALREADY CONFIGURED")
 

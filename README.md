@@ -31,3 +31,7 @@ Mode (0 = none, 1 = WEP, 2 = WPA1, 3 = WPA2, 4 = WPA1/2)
 
 Once the RM Config is already config just run the CLI with -g flag
 > python3 src/rm_config.py -g
+
+for further information use the help flag
+
+> python3 src/rm_config.py --help
