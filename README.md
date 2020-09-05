@@ -29,5 +29,5 @@ Setup a new device on your local wireless network:
 
 Mode (0 = none, 1 = WEP, 2 = WPA1, 3 = WPA2, 4 = WPA1/2)
 
-Once the RM Config is already config just run the CLI with no args
+Once the RM Config is already config just run the CLI with -g flag
 > python3 rm_config.py
