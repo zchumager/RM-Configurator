@@ -66,8 +66,6 @@ def main():
             input("WAIT!!! PRESS ENTER JUST WHEN YOUR COMPUTER CONNECTS TO YOUR HOME NETWORK AGAIN...")
 
         discover_devices()
-    else:
-        discover_devices()
 
 
 if __name__ == '__main__':
