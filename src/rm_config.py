@@ -46,30 +46,30 @@ def discover_devices():
     if len(devices) > 0:
         rm_info = get_rm_info(devices)
         print(f"Device Information: {rm_info}")
+    else:
+        print("No device was found on the network")
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description='RM Mini Configurator Python CLI Tool'
-    )
+    parser = argparse.ArgumentParser(description='RM Mini Configurator Python CLI Tool')
 
-    parser.add_argument('-s', help="WiFi SSID")
-    parser.add_argument('-p', help="WiFi Password")
-    parser.add_argument('-m', help="WiFi Security Mode")
-    parser.add_argument('-g', help="Get details for an already configured RM Mini", action="store_true")
+    parser.add_argument('--ssid', help="WiFi SSID")
+    parser.add_argument('--password', help="WiFi Password")
+    parser.add_argument('--mode', help="WiFi Security Mode")
+    parser.add_argument('--get', help="Get details for an already configured RM Mini", action="store_true")
 
     args = parser.parse_args()
 
-    if args.s and args.p and args.m:
-        setup_rm(args.s, args.p, int(args.m))
+    if args.ssid and args.password and args.mode:
+        setup_rm(args.ssid, args.password, int(args.mode))
         devices = broadlink.discover(timeout=5)
         if not devices:
             input("WAIT!!! PRESS ENTER JUST WHEN YOUR COMPUTER CONNECTS TO YOUR HOME NETWORK AGAIN...")
         discover_devices()
-    elif args.g:
+    elif args.get:
         discover_devices()
     else:
-        print("PLEASE USE THE FLAG -g TO GET RM MINI ALREADY CONFIGURED")
+        print("PLEASE USE THE FLAG --get TO GET RM MINI ALREADY CONFIGURED")
 
 
 if __name__ == '__main__':

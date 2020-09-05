@@ -1,6 +1,5 @@
 broadlink==0.14.1
 cffi==1.14.2
 cryptography==3.1
-protobuf==3.12.3
 pycparser==2.20
 six==1.15.0
