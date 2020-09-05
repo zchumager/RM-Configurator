@@ -25,9 +25,9 @@ Setup a new device on your local wireless network:
  3. Manually connect to the WiFi SSID named BroadlinkProv.
  4. Run rm_config with python3 interpreter
  
-> python3 rm_config.py -s SSID_2.4 -p SSID_PASSWORD -m  MODE
+> python3 src/rm_config.py -s SSID_2.4 -p SSID_PASSWORD -m  MODE
 
 Mode (0 = none, 1 = WEP, 2 = WPA1, 3 = WPA2, 4 = WPA1/2)
 
 Once the RM Config is already config just run the CLI with -g flag
-> python3 rm_config.py
+> python3 src/rm_config.py -g
