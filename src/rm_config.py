@@ -56,6 +56,7 @@ def main():
     parser.add_argument('-s', help="WiFi SSID")
     parser.add_argument('-p', help="WiFi Password")
     parser.add_argument('-m', help="WiFi Security Mode")
+    parser.add_argument('-g', help="Get details for an already configured RM Mini", action="store_true")
 
     args = parser.parse_args()
 
@@ -64,8 +65,11 @@ def main():
         devices = broadlink.discover(timeout=5)
         if not devices:
             input("WAIT!!! PRESS ENTER JUST WHEN YOUR COMPUTER CONNECTS TO YOUR HOME NETWORK AGAIN...")
-
         discover_devices()
+    elif args.g:
+        discover_devices()
+    else:
+        print("PLEASE USE THE FLAG -g TO GET RM MINI ALREADY CONFIGURED")
 
 
 if __name__ == '__main__':
