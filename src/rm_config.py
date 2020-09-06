@@ -2,8 +2,11 @@
 
 
 import argparse
-import nmap
 import broadlink
+import nmap
+import netaddr
+import random
+
 from errno import ENETUNREACH
 
 
@@ -18,7 +21,7 @@ def setup_rm(ssid, password, sec_mode):
         broadlink.setup(ssid, password, sec_mode)
     except IOError as e:
         if e.errno == ENETUNREACH:
-            print("sending packages")
+            print("SENDING PACKAGES")
 
 
 def get_rm_info(devices):
@@ -47,22 +50,30 @@ def discover_devices():
     devices = broadlink.discover(timeout=5)
     if len(devices) > 0:
         rm_info = get_rm_info(devices)
-        print(f"Device Information: {rm_info}")
+        print(f"DEVICE INFORMATION: {rm_info}")
     else:
-        print("No device was found on the network")
+        print("NO DEVICE WAS FOUND IN THE NETWORK")
 
 
 def get_used_ips(network_mask):
     '''
         :param network_mask: the valid network mask where computer is connected like 192.168.x.y/24
+        :return:
     '''
-    nm = nmap.PortScanner()
+    all_ips = list(netaddr.IPNetwork(network_mask).iter_hosts())
+    all_ips_list = [str(ip) for ip in all_ips]
 
+    nm = nmap.PortScanner()
     host_dict = nm.scan(hosts=network_mask, arguments='-n -sP -PE').get('scan')
     host_list = host_dict.keys()
 
+    print("USED IPS:")
     for host in host_list:
         print(host)
+
+    free_ips = list(set(all_ips_list) - set(host_list))
+    print("******************************************")
+    print("SUGGESTED IP TO USE AS STATIC: ", random.choice(free_ips))
 
 
 def main():
@@ -71,8 +82,8 @@ def main():
     parser.add_argument('--ssid', help="WiFi SSID")
     parser.add_argument('--password', help="WiFi Password")
     parser.add_argument('--mode', help="WiFi Security Mode")
-    parser.add_argument('--get', help="Get details for an already configured RM Mini", action="store_true")
-    parser.add_argument('--mask', help='Get Used IPs to use as static according a network mask')
+    parser.add_argument('--details', help="Get details for an already configured RM Mini", action="store_true")
+    parser.add_argument('--getip', help='Get a free IP to use as static according a network mask')
 
     args = parser.parse_args()
 
@@ -82,12 +93,15 @@ def main():
         if not devices:
             input("WAIT!!! PRESS ENTER JUST WHEN YOUR COMPUTER CONNECTS TO YOUR HOME NETWORK AGAIN...")
         discover_devices()
-    elif args.get:
+    elif args.details:
         discover_devices()
-    elif args.mask:
-        get_used_ips(args.mask)
+    elif args.getip:
+        get_used_ips(args.getip)
     else:
-        print("PLEASE USE THE FLAG --get TO GET RM MINI ALREADY CONFIGURED")
+        print("IF THE RM MINI IS ALREADY CONFIGURED")
+        print("PLEASE USE THE FLAG --details TO GET THE CONNECTION DATA")
+        print("IN OTHER CASE USE THE FOLLOWING EXAMPLE TO CONFIGURE THE RM MINI")
+        print("python3 src/rm_config.py --sssid SSID_2.4 --password SSID_PASSWORD --mode  NETWORK_MODE")
 
 
 if __name__ == '__main__':
