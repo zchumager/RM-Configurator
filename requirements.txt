@@ -1,5 +1,7 @@
 broadlink==0.14.1
 cffi==1.14.2
 cryptography==3.1
+netaddr==0.8.0
 pycparser==2.20
+python-nmap==0.6.1
 six==1.15.0
