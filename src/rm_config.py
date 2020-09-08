@@ -3,12 +3,13 @@
 
 import argparse
 import broadlink
+import ifcfg
 import nmap
 import netaddr
 import random
 
 from errno import ENETUNREACH
-
+from functools import reduce
 
 def setup_rm(ssid, password, sec_mode):
     """
@@ -55,16 +56,36 @@ def discover_devices():
         print("NO DEVICE WAS FOUND IN THE NETWORK")
 
 
-def get_used_ips(network_mask):
+def calculate_netmask_bits(netmask):
+    netmask_bits = 0
+
+    for segment in netmask.split("."):
+        binary_value = bin(int(segment)).replace("0b", "")
+        bits = int(reduce(lambda x, y: int(x) + int(y), binary_value))
+        netmask_bits += bits
+
+    return netmask_bits
+
+
+def get_used_ips():
     '''
         :param network_mask: the valid network mask where computer is connected like 192.168.x.y/24
         :return:
     '''
-    all_ips = list(netaddr.IPNetwork(network_mask).iter_hosts())
+
+    default = ifcfg.default_interface()
+
+    ip_address = default['inet']
+    network_mask = default['netmask']
+
+    netmask_bits = calculate_netmask_bits(network_mask)
+    subnet_mask = f"{ip_address}/{netmask_bits}"
+
+    all_ips = list(netaddr.IPNetwork(subnet_mask).iter_hosts())
     all_ips_list = [str(ip) for ip in all_ips]
 
     nm = nmap.PortScanner()
-    host_dict = nm.scan(hosts=network_mask, arguments='-n -sP -PE').get('scan')
+    host_dict = nm.scan(hosts=subnet_mask, arguments='-n -sP -PE').get('scan')
     host_list = host_dict.keys()
 
     print("USED IPS:")
@@ -83,7 +104,7 @@ def main():
     parser.add_argument('--password', help="WiFi Password")
     parser.add_argument('--mode', help="WiFi Security Mode")
     parser.add_argument('--details', help="Get details for an already configured RM Mini", action="store_true")
-    parser.add_argument('--getip', help='Get a free IP to use as static according a network mask')
+    parser.add_argument('--getip', help='Get a free IP to use as static', action="store_true")
 
     args = parser.parse_args()
 
@@ -96,7 +117,7 @@ def main():
     elif args.details:
         discover_devices()
     elif args.getip:
-        get_used_ips(args.getip)
+        get_used_ips()
     else:
         print("IF THE RM MINI IS ALREADY CONFIGURED")
         print("PLEASE USE THE FLAG --details TO GET THE CONNECTION DATA")
