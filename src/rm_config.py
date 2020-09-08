@@ -56,10 +56,10 @@ def discover_devices():
         print("NO DEVICE WAS FOUND IN THE NETWORK")
 
 
-def calculate_netmask_bits(netmask):
+def calculate_netmask_bits(network_mask):
     netmask_bits = 0
 
-    for segment in netmask.split("."):
+    for segment in network_mask.split("."):
         binary_value = bin(int(segment)).replace("0b", "")
         bits = int(reduce(lambda x, y: int(x) + int(y), binary_value))
         netmask_bits += bits
@@ -80,6 +80,8 @@ def get_used_ips():
 
     netmask_bits = calculate_netmask_bits(network_mask)
     subnet_mask = f"{ip_address}/{netmask_bits}"
+
+    print("GETTING IP TO USE AS STATIC...")
 
     all_ips = list(netaddr.IPNetwork(subnet_mask).iter_hosts())
     all_ips_list = [str(ip) for ip in all_ips]
