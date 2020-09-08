@@ -57,6 +57,11 @@ def discover_devices():
 
 
 def calculate_netmask_bits(network_mask):
+    '''
+        :param network_mask: the valid network mask where computer is connected like 255.255.255.0
+        :return: number of bits in decimal format like /24
+    '''
+
     netmask_bits = 0
 
     for segment in network_mask.split("."):
@@ -68,11 +73,6 @@ def calculate_netmask_bits(network_mask):
 
 
 def get_used_ips():
-    '''
-        :param network_mask: the valid network mask where computer is connected like 192.168.x.y/24
-        :return:
-    '''
-
     default = ifcfg.default_interface()
 
     ip_address = default['inet']
