@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 # copy source code to the working directory
 COPY src/ .
 
-ENTRYPOINT ["python", "rm_config.py"]
+ENTRYPOINT ["python", "rm_config.py", "--details"]
