@@ -4,6 +4,8 @@ IT IS REALLY IMPORTANT EXECUTE PIP INSTALL ON TXT FILE TO DOWNLOAD DEPENDENCIES
 
 pip3 install -r requirements.txt
 
+Alternatively execute config.sh for linux or config.bat for windows to create a virtual env with all the dependencies already installed
+
 Python CLI Tool for retrieving network information of any Broadlink device like RM2, RM3 and RM4 IR/RF Hub  
 . At present, the following devices are currently supported:  
 
