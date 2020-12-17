@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  rmconfig:
+    build: .
+    command: --details
+    network_mode: host
