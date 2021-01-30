@@ -4,4 +4,4 @@ services:
   rmconfig:
     build: .
     command: --details
-    network_mode: host
+    network_mode: bridge

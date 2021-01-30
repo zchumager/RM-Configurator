@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-
 import argparse
 import broadlink
 import ifcfg
@@ -10,6 +9,7 @@ import random
 
 from errno import ENETUNREACH
 from functools import reduce
+
 
 def setup_rm(ssid, password, sec_mode):
     """
