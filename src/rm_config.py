@@ -11,6 +11,7 @@ import random
 from errno import ENETUNREACH
 from functools import reduce
 
+
 def setup_rm(ssid, password, sec_mode):
     """
     :param ssid: WiFi SSID
