@@ -2,9 +2,13 @@
 
 IT IS REALLY IMPORTANT EXECUTE PIP INSTALL ON TXT FILE TO DOWNLOAD DEPENDENCIES
 
-pip3 install -r requirements.txt
+> pip3 install -r requirements.txt
 
 Alternatively execute config.sh for linux or config.bat for windows to create a virtual env with all the dependencies already installed
+
+ALSO IT IS REALLY IMPORTANT TO RUN SETUP SCRIPT
+
+> python3 .\setup.py develop --user
 
 Python CLI Tool for retrieving network information of any Broadlink device like RM2, RM3 and RM4 IR/RF Hub  
 . At present, the following devices are currently supported:  
@@ -30,7 +34,7 @@ Mode (0 = none, 1 = WEP, 2 = WPA1, 3 = WPA2, 4 = WPA1/2)
 Once the RM Config is already configured just run the CLI with --details flag to get all RM Mini Connection Data
 > python3 src/rm_config.py --details
 
-Also as addition --getip is included to get a free IP address to used as static
+Also as addition --getip is included to get a free IP address to be used as static
 > python3 src/rm_config.py --getip
 
 for further information use the help flag
