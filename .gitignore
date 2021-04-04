@@ -1,4 +1,4 @@
 .idea/
 venv/
 Pipfile.lock
-
+src.egg-info/
