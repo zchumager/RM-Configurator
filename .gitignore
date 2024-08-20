@@ -1,0 +1,6 @@
+.idea/
+venv/
+Pipfile.lock
+build/
+dist/
+rm_configurator.egg-info/
